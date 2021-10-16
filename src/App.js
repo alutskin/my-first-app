@@ -1,7 +1,11 @@
+import Header from "./components/Header";
+import Card from "./components/Card";
+
 function App() {
   return (
     <div>
-      <h2>Let's get started!</h2>
+      <Header />
+      <Card />
     </div>
   );
 }

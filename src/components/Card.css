@@ -1,0 +1,20 @@
+.card {
+    position: absolute;
+    top: 220px;
+    left: 40px;
+    background-color: #A9A9A9;
+    text-align: justify;
+    width: 400px;
+    border-radius: 12px;
+}
+
+.caption {
+    color: #3f3f3f;
+    text-align: center;
+    font-size: 20pt;
+}
+
+.text {
+    color: #f5f5f5;
+    padding: 10px;
+}
