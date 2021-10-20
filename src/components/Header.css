@@ -1,0 +1,13 @@
+header {
+    position: absolute;
+    height: 150px;
+    width: 100%;
+    text-align: center;
+    color: #3f3f3f;
+    background-color: #C0C0C0;
+    box-shadow: 1px 1px #808080;
+}
+
+h1 {
+    font-size: 32pt;
+}
