@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <Header />
-      <Card />
+      <Card checked={false} />
     </div>
   );
 }

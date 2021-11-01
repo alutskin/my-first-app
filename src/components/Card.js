@@ -2,35 +2,27 @@ import { useState } from "react";
 
 import "./Card.css";
 
-function Card() {
-  const [cardClass, setCardClass] = useState('card');
-  const [captionClass, setCaptionClass] = useState('caption');
-  const [textClass, setTextClass] = useState('text');
-  const [lineColor, setLineColor] = useState('#3f3f3f');
+function Card(props) {
+  let classNames = require('classnames');
+  const [checked, setChecked] = useState(props.checked);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
-      setCardClass('card darkCard');
-      setCaptionClass('caption darkCaption');
-      setTextClass('text darkText');
-      setLineColor('#C0C0C0');
+      setChecked(true);
     } else {
-      setCardClass('card');
-      setCaptionClass('caption');
-      setTextClass('text');
-      setLineColor('#3f3f3f');
+      setChecked(false);
     }
   };
 
   return (
-    <div className={cardClass}>
-      <h2 className={captionClass}>Таблица цветов</h2>
+    <div className={classNames('card', {darkCard: checked})}>
+      <h2 className={classNames('caption', {darkCaption: checked})}>Таблица цветов</h2>
 
-      <input type="checkbox" id="one" onChange={checkboxHandler} />
+      <input type="checkbox" id="one" onChange={checkboxHandler} checked={checked} />
 
-      <hr color={lineColor} className="line" />
+      <hr color={checked ? '#C0C0C0' : '#3f3f3f'} className="line" />
 
-      <p className={textClass}>
+      <p className={classNames('text', {darkText: checked})}>
         Для сохранения единообразия страниц, цвета в МедиаВики нужно
         использовать обдуманно. Яркие цвета в статьях должны использоваться
         только в виде исключения, когда это целесообразно по содержанию (на
