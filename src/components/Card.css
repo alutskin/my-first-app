@@ -1,22 +1,51 @@
 .card {
+    /* This position-property is used for checkbox position relative to its parent. */
     position: absolute;
-    top: 220px;
-    left: 40px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 50px 50px;
     background-color: #A9A9A9;
-    text-align: justify;
     width: 400px;
     border-radius: 12px;
 }
 
+.darkCard {
+    background-color: #2e2e2e;
+}
+
 .caption {
+    display: flex;
+    align-self: center;
     color: #3f3f3f;
-    text-align: center;
     font-size: 20pt;
 }
 
+.darkCaption {
+    color: #C0C0C0;
+}
+
+.line {
+    width: 400px;
+    border-width: 1.5px;
+}
+
 .text {
-    color: #f5f5f5;
+    color: #3f3f3f;
     padding: 10px;
+    text-align: justify;
+}
+
+.darkText {
+    color: #C0C0C0;
+}
+
+#one {
+    position: absolute;
+    top: 20px;
+    left: 360px;
+    height: 17px;
+    width: 17px;
 }
 
 #two, #three, #four {
