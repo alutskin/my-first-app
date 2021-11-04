@@ -1,17 +1,56 @@
-import './Card.css';
+import { useState } from "react";
 
-function Card() {
+import "./Card.css";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
+
+function Card(props) {
+  const [editable, setEditable] = useState(false);
+  const [caption, setCaption] = useState(props.caption);
+  const [text, setText] = useState(props.text);
+
+  const editClickHandler = () => {
+    setEditable(true);
+  };
+
+  const saveChangesHandler = () => {
+    setCaption(document.querySelector(".caption").innerHTML);
+    setText(document.querySelector(".text").innerHTML);
+    setEditable(false);
+  };
+
+  const cancelChangesHandler = () => {
+    setEditable(false);
+    setCaption(caption);
+    setText(text);
+  };
+
   return (
     <div className="card">
-      <h2 className="caption">Таблица цветов</h2>
-      <hr color="#3f3f3f" />
-      <p className="text">
-        Для сохранения единообразия страниц, цвета в МедиаВики нужно
-        использовать обдуманно. Яркие цвета в статьях должны использоваться
-        только в виде исключения, когда это целесообразно по содержанию (на
-        своей странице участника можете брызгать краской по своему вкусу :-). В
-        порталах допускается более интенсивная раскраска, но ориентируйтесь на
-        существующие примеры.
+      <h2 className="caption" contentEditable={editable}>
+        {caption}
+      </h2>
+      <AiFillEdit
+        id="two"
+        color="#3f3f3f"
+        visibility={editable ? "hidden" : "visible"}
+        onClick={editClickHandler}
+      />
+      <AiFillCheckCircle
+        id="three"
+        color="#3f3f3f"
+        visibility={editable ? "visible" : "hidden"}
+        onClick={saveChangesHandler}
+      />
+      <AiFillCloseCircle
+        id="four"
+        color="#3f3f3f"
+        visibility={editable ? "visible" : "hidden"}
+        onClick={cancelChangesHandler}
+      />
+      <p className="text" contentEditable={editable}>
+        {text}
       </p>
     </div>
   );

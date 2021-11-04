@@ -18,3 +18,20 @@
     color: #f5f5f5;
     padding: 10px;
 }
+
+#two, #three, #four {
+    position: absolute;
+    top: 13px;
+    left: 340px;
+    width: 17px;
+    height: 17px;
+}
+
+#three, #four {
+    width: 20px;
+    height: 20px;
+}
+
+#four {
+    left: 365px;
+}
