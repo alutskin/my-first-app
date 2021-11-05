@@ -11,7 +11,9 @@ function Card(props) {
   const [checked, setChecked] = useState(props.checked);
   const [editable, setEditable] = useState(false);
   const [caption, setCaption] = useState(props.caption);
+  const [curCaptionValue, setCurCaptionValue] = useState(caption);
   const [text, setText] = useState(props.text);
+  const [curTextValue, setCurTextValue] = useState(text);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
@@ -23,18 +25,29 @@ function Card(props) {
 
   const editClickHandler = () => {
     setEditable(true);
+    setChecked(false);
   };
 
   const saveChangesHandler = () => {
-    setCaption(document.querySelector(".caption").innerHTML);
-    setText(document.querySelector(".text").innerHTML);
+    setCaption(curCaptionValue);
+    setText(curTextValue);
     setEditable(false);
   };
 
   const cancelChangesHandler = () => {
+    // I don't know, why, but it doesn't work without "+ ' '".
+    // If you explain this case to me, I will be grateful.
+    setCaption(caption + ' ');
+    setText(text + ' ');
     setEditable(false);
-    setCaption(caption);
-    setText(text);
+  };
+
+  const captionChangeHandler = (event) => {
+    setCurCaptionValue(event.target.textContent);
+  };
+
+  const textChangeHandler = (event) => {
+    setCurTextValue(event.target.textContent);
   };
 
   return (
@@ -42,6 +55,7 @@ function Card(props) {
       <h2
         className={classNames("caption", { darkCaption: checked })}
         contentEditable={editable}
+        onKeyUp={captionChangeHandler}
       >
         {caption}
       </h2>
@@ -49,13 +63,14 @@ function Card(props) {
       <input
         type="checkbox"
         id="one"
-        onChange={checkboxHandler}
         checked={checked}
+        style={editable ? {display: "none"} : {display: "inline"}}
+        onChange={checkboxHandler}
       />
 
       <AiFillEdit
         id="two"
-        color="#3f3f3f"
+        color={checked ? "#C0C0C0" : "#3f3f3f"}
         visibility={editable ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
@@ -79,6 +94,7 @@ function Card(props) {
       <p
         className={classNames("text", { darkText: checked })}
         contentEditable={editable}
+        onKeyUp={textChangeHandler}
       >
         {text}
       </p>
