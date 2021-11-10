@@ -8,37 +8,30 @@ import { AiFillCloseCircle } from "react-icons/ai";
 function Card(props) {
   let classNames = require("classnames");
 
-  const [checked, setChecked] = useState(props.checked);
   const [editable, setEditable] = useState(false);
-  const [caption, setCaption] = useState(props.caption);
-  const [curCaptionValue, setCurCaptionValue] = useState(caption);
-  const [text, setText] = useState(props.text);
-  const [curTextValue, setCurTextValue] = useState(text);
+  const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
+  const [curTextValue, setCurTextValue] = useState(props.text);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
-      setChecked(true);
+      props.onUpdateCheckedStatus(true, props.id);
     } else {
-      setChecked(false);
+      props.onUpdateCheckedStatus(false, props.id);
     }
   };
 
   const editClickHandler = () => {
     setEditable(true);
-    setChecked(false);
+    props.onUpdateCheckedStatus(false, props.id);
   };
 
   const saveChangesHandler = () => {
-    setCaption(curCaptionValue);
-    setText(curTextValue);
+    props.onUpdateContent(curCaptionValue, curTextValue, props.id);
     setEditable(false);
   };
 
   const cancelChangesHandler = () => {
-    // I don't know, why, but it doesn't work without "+ ' '".
-    // If you explain this case to me, I will be grateful.
-    setCaption(caption + ' ');
-    setText(text + ' ');
+    props.onUpdateContent(props.caption + ' ', props.text + ' ', props.id);
     setEditable(false);
   };
 
@@ -51,26 +44,26 @@ function Card(props) {
   };
 
   return (
-    <div className={classNames("card", { darkCard: checked })}>
+    <div className={classNames("card", { darkCard: props.checked })}>
       <h2
-        className={classNames("caption", { darkCaption: checked })}
+        className={classNames("caption", { darkCaption: props.checked })}
         contentEditable={editable}
         onKeyUp={captionChangeHandler}
       >
-        {caption}
+        {props.caption}
       </h2>
 
       <input
         type="checkbox"
         id="one"
-        checked={checked}
+        checked={props.checked}
         style={editable ? {display: "none"} : {display: "inline"}}
         onChange={checkboxHandler}
       />
 
       <AiFillEdit
         id="two"
-        color={checked ? "#C0C0C0" : "#3f3f3f"}
+        color={props.checked ? "#C0C0C0" : "#3f3f3f"}
         visibility={editable ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
@@ -89,14 +82,14 @@ function Card(props) {
         onClick={cancelChangesHandler}
       />
 
-      <hr color={checked ? "#C0C0C0" : "#3f3f3f"} className="line" />
+      <hr color={props.checked ? "#C0C0C0" : "#3f3f3f"} className="line" />
       
       <p
-        className={classNames("text", { darkText: checked })}
+        className={classNames("text", { darkText: props.checked })}
         contentEditable={editable}
         onKeyUp={textChangeHandler}
       >
-        {text}
+        {props.text}
       </p>
     </div>
   );

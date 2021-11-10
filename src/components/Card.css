@@ -1,12 +1,13 @@
 .card {
     /* This position-property is used for checkbox position relative to its parent. */
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 50px 50px;
+    margin: 50px 30px;
     background-color: #A9A9A9;
     width: 400px;
+    height: fit-content;
     border-radius: 12px;
 }
 
@@ -32,7 +33,8 @@
 
 .text {
     color: #3f3f3f;
-    padding: 10px;
+    margin: 0;
+    padding: 15px;
     text-align: justify;
 }
 
@@ -42,16 +44,16 @@
 
 #one {
     position: absolute;
-    top: 13px;
-    left: 360px;
+    top: 10px;
+    left: 370px;
     height: 17px;
     width: 17px;
 }
 
 #two, #three, #four {
     position: absolute;
-    top: 16px;
-    left: 340px;
+    top: 13px;
+    left: 350px;
     width: 17px;
     height: 17px;
 }
@@ -63,5 +65,5 @@
 }
 
 #four {
-    left: 365px;
+    left: 375px;
 }
