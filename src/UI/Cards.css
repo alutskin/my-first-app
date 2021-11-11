@@ -1,0 +1,20 @@
+.cards {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+::-webkit-scrollbar {
+    background-color: #A9A9A9;
+    box-shadow: 1px 1px 2px #2e2e2e;
+    height: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #2e2e2e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #202020;
+}

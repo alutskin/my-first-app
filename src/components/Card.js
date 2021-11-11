@@ -1,34 +1,95 @@
 import { useState } from "react";
 
 import "./Card.css";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 function Card(props) {
-  let classNames = require('classnames');
-  const [checked, setChecked] = useState(props.checked);
+  let classNames = require("classnames");
+
+  const [editable, setEditable] = useState(false);
+  const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
+  const [curTextValue, setCurTextValue] = useState(props.text);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
-      setChecked(true);
+      props.onUpdateCheckedStatus(true, props.id);
     } else {
-      setChecked(false);
+      props.onUpdateCheckedStatus(false, props.id);
     }
   };
 
+  const editClickHandler = () => {
+    setEditable(true);
+    props.onUpdateCheckedStatus(false, props.id);
+  };
+
+  const saveChangesHandler = () => {
+    props.onUpdateContent(curCaptionValue, curTextValue, props.id);
+    setEditable(false);
+  };
+
+  const cancelChangesHandler = () => {
+    props.onUpdateContent(props.caption + ' ', props.text + ' ', props.id);
+    setEditable(false);
+  };
+
+  const captionChangeHandler = (event) => {
+    setCurCaptionValue(event.target.textContent);
+  };
+
+  const textChangeHandler = (event) => {
+    setCurTextValue(event.target.textContent);
+  };
+
   return (
-    <div className={classNames('card', {darkCard: checked})}>
-      <h2 className={classNames('caption', {darkCaption: checked})}>Таблица цветов</h2>
+    <div className={classNames("card", { darkCard: props.checked })}>
+      <h2
+        className={classNames("caption", { darkCaption: props.checked })}
+        contentEditable={editable}
+        onKeyUp={captionChangeHandler}
+      >
+        {props.caption}
+      </h2>
 
-      <input type="checkbox" id="one" onChange={checkboxHandler} checked={checked} />
+      <input
+        type="checkbox"
+        id="one"
+        checked={props.checked}
+        style={editable ? {display: "none"} : {display: "inline"}}
+        onChange={checkboxHandler}
+      />
 
-      <hr color={checked ? '#C0C0C0' : '#3f3f3f'} className="line" />
+      <AiFillEdit
+        id="two"
+        color={props.checked ? "#C0C0C0" : "#3f3f3f"}
+        visibility={editable ? "hidden" : "visible"}
+        onClick={editClickHandler}
+      />
 
-      <p className={classNames('text', {darkText: checked})}>
-        Для сохранения единообразия страниц, цвета в МедиаВики нужно
-        использовать обдуманно. Яркие цвета в статьях должны использоваться
-        только в виде исключения, когда это целесообразно по содержанию (на
-        своей странице участника можете брызгать краской по своему вкусу :-). В
-        порталах допускается более интенсивная раскраска, но ориентируйтесь на
-        существующие примеры.
+      <AiFillCheckCircle
+        id="three"
+        color="#3f3f3f"
+        visibility={editable ? "visible" : "hidden"}
+        onClick={saveChangesHandler}
+      />
+
+      <AiFillCloseCircle
+        id="four"
+        color="#3f3f3f"
+        visibility={editable ? "visible" : "hidden"}
+        onClick={cancelChangesHandler}
+      />
+
+      <hr color={props.checked ? "#C0C0C0" : "#3f3f3f"} className="line" />
+      
+      <p
+        className={classNames("text", { darkText: props.checked })}
+        contentEditable={editable}
+        onKeyUp={textChangeHandler}
+      >
+        {props.text}
       </p>
     </div>
   );
