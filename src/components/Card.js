@@ -32,6 +32,8 @@ function Card(props) {
 
   const cancelChangesHandler = () => {
     props.onUpdateContent(props.caption + ' ', props.text + ' ', props.id);
+    setCurCaptionValue(props.caption + ' ');
+    setCurTextValue(props.text + ' ');
     setEditable(false);
   };
 
@@ -42,6 +44,10 @@ function Card(props) {
   const textChangeHandler = (event) => {
     setCurTextValue(event.target.textContent);
   };
+
+  if (editable && props.readOnly) {
+    cancelChangesHandler();
+  }
 
   return (
     <div className={classNames("card", { darkCard: props.checked })}>
@@ -64,7 +70,7 @@ function Card(props) {
       <AiFillEdit
         id="two"
         color={props.checked ? "#C0C0C0" : "#3f3f3f"}
-        visibility={editable ? "hidden" : "visible"}
+        visibility={editable || props.readOnly ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
 

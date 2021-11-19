@@ -15,3 +15,16 @@ body {
   flex-direction: column;
 }
 
+#read-only {
+  margin: 20px 10px;
+  height: 16px;
+  width: 16px;
+}
+
+label[for="read-only"] {
+  color: #C0C0C0;
+  font-size: 16pt;
+  position: relative;
+  top: -1px;
+  left: -2px;
+}

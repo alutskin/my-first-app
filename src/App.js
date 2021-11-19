@@ -69,14 +69,39 @@ const INITIAL_DATA = [
       "возникновении данного предмета, а так же о принципах его формирования.",
     checked: false,
   },
+  {
+    id: "c7",
+    caption: "What Is React?",
+    text:
+      "React is a declarative, efficient, and flexible JavaScript library for " +
+      "building user interfaces. It lets you compose complex UIs from small and isolated " +
+      "pieces of code called “components”.We’ll get to the funny XML-like tags soon. " +
+      "We use components to tell React what we want to see on the screen. When our data " +
+      "changes, React will efficiently update and re-render our components." +
+      "Here, ShoppingList is a React component class, or React component type. A component " +
+      "takes in parameters, called props (short for “properties”), and returns a hierarchy " +
+      "of views to display via the render method.",
+  },
+  {
+    id: "c8",
+    caption: "Inspecting the Starter Code",
+    text:
+      "If you’re going to work on the tutorial in your browser, open this code in " +
+      "a new tab: Starter Code. If you’re going to work on the tutorial locally, instead " +
+      "open src/index.js in your project folder (you have already touched this file " +
+      "during the setup). This Starter Code is the base of what we’re building. We’ve " +
+      "provided the CSS styling so that you only need to focus on learning React and " +
+      "programming the tic-tac-toe game.",
+  },
 ];
 
 function App() {
   const [appState, setAppState] = useState(INITIAL_DATA);
+  const [readOnly, setReadOnly] = useState(false);
 
   const updateContentHandler = (newCaption, newText, id) => {
     const newAppState = appState.slice(0);
-    const card = newAppState.find(data => data.id === id);
+    const card = newAppState.find((data) => data.id === id);
     card.caption = newCaption;
     card.text = newText;
     setAppState(newAppState);
@@ -84,14 +109,24 @@ function App() {
 
   const updateCheckedStatusHandler = (status, id) => {
     const newAppState = appState.slice(0);
-    const card = newAppState.find(data => data.id === id);
+    const card = newAppState.find((data) => data.id === id);
     card.checked = status;
     setAppState(newAppState);
+  };
+
+  const readOnlyStatusHandler = (event) => {
+    if (event.target.checked) {
+      setReadOnly(true);
+    } else {
+      setReadOnly(false);
+    }
   };
 
   return (
     <div>
       <Header />
+      <input id="read-only" type="checkbox" onChange={readOnlyStatusHandler}></input>
+      <label htmlFor="read-only">Только просмотр</label>
       <Cards>
         {appState.map((cardData) => (
           <Card
@@ -100,6 +135,7 @@ function App() {
             caption={cardData.caption}
             text={cardData.text}
             checked={cardData.checked}
+            readOnly={readOnly}
             onUpdateContent={updateContentHandler}
             onUpdateCheckedStatus={updateCheckedStatusHandler}
           />
