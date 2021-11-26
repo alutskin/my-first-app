@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import styled from "styled-components";
+
 import Header from "./components/Header";
 import Cards from "./UI/Cards";
 import Card from "./components/Card";
@@ -95,6 +97,13 @@ const INITIAL_DATA = [
   },
 ];
 
+const ReadOnlyCheckbox = styled.input`
+  margin: 20px 10px;
+  height: 16px;
+  width: 16px;
+  box-shadow: 1px 1px 2px black;
+`;
+
 function App() {
   const [appState, setAppState] = useState(INITIAL_DATA);
   const [readOnly, setReadOnly] = useState(false);
@@ -125,7 +134,11 @@ function App() {
   return (
     <div>
       <Header />
-      <input id="read-only" type="checkbox" onChange={readOnlyStatusHandler}></input>
+      <ReadOnlyCheckbox
+        id="read-only"
+        type="checkbox"
+        onChange={readOnlyStatusHandler}
+      ></ReadOnlyCheckbox>
       <label htmlFor="read-only">Только просмотр</label>
       <Cards>
         {appState.map((cardData) => (
