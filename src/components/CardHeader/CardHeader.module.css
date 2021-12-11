@@ -1,0 +1,10 @@
+.caption {
+    display: flex;
+    align-self: center;
+    color: #3f3f3f;
+    font-size: 20pt;
+}
+
+.dark-caption {
+    color: #C0C0C0;
+}

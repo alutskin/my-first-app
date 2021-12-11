@@ -1,0 +1,10 @@
+.text {
+    color: #3f3f3f;
+    margin: 0;
+    padding: 15px;
+    text-align: justify;
+}
+
+.dark-text {
+    color: #C0C0C0;
+}
