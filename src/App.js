@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import styled from "styled-components";
 
-import Header from "./components/Header";
-import Cards from "./UI/Cards";
-import Card from "./components/Card";
+import Header from "./components/Header/Header";
+import CardList from "./components/CardList/CardList";
+import DeleteButton from "./components/DeleteButton/DeleteButton";
+import Panel from "./UI/Panel/Panel";
 
 const INITIAL_DATA = [
   {
@@ -83,6 +84,7 @@ const INITIAL_DATA = [
       "Here, ShoppingList is a React component class, or React component type. A component " +
       "takes in parameters, called props (short for “properties”), and returns a hierarchy " +
       "of views to display via the render method.",
+    checked: false,
   },
   {
     id: "c8",
@@ -94,15 +96,16 @@ const INITIAL_DATA = [
       "during the setup). This Starter Code is the base of what we’re building. We’ve " +
       "provided the CSS styling so that you only need to focus on learning React and " +
       "programming the tic-tac-toe game.",
+    checked: false,
   },
 ];
 
-const ReadOnlyCheckbox = styled.input`
-  margin: 20px 10px;
+const ReadOnlyCheckbox = React.memo(styled.input`
+  margin-right: 10px;
   height: 16px;
   width: 16px;
-  box-shadow: 1px 1px 2px black;
-`;
+  box-shadow: 1px 1px 4px rgb(22, 22, 22);
+`);
 
 function App() {
   const [appState, setAppState] = useState(INITIAL_DATA);
@@ -123,37 +126,42 @@ function App() {
     setAppState(newAppState);
   };
 
-  const readOnlyStatusHandler = (event) => {
+  const readOnlyStatusHandler = useCallback((event) => {
     if (event.target.checked) {
       setReadOnly(true);
     } else {
       setReadOnly(false);
     }
+  }, []);
+
+  const deleteSelectedCardsHandler = () => {
+    const newAppState = appState.filter((data) => data.checked === false);
+    setAppState(newAppState);
   };
 
   return (
     <div>
       <Header />
-      <ReadOnlyCheckbox
-        id="read-only"
-        type="checkbox"
-        onChange={readOnlyStatusHandler}
-      ></ReadOnlyCheckbox>
-      <label htmlFor="read-only">Только просмотр</label>
-      <Cards>
-        {appState.map((cardData) => (
-          <Card
-            id={cardData.id}
-            key={cardData.id}
-            caption={cardData.caption}
-            text={cardData.text}
-            checked={cardData.checked}
-            readOnly={readOnly}
-            onUpdateContent={updateContentHandler}
-            onUpdateCheckedStatus={updateCheckedStatusHandler}
+
+      <Panel>
+        <div>
+          <ReadOnlyCheckbox
+            id="read-only"
+            type="checkbox"
+            onChange={readOnlyStatusHandler}
           />
-        ))}
-      </Cards>
+          <label htmlFor="read-only">Только просмотр</label>
+        </div>
+
+        <DeleteButton onClick={deleteSelectedCardsHandler} />
+      </Panel>
+
+      <CardList
+        data={appState}
+        readOnly={readOnly}
+        onUpdateContent={updateContentHandler}
+        onUpdateCheckedStatus={updateCheckedStatusHandler}
+      />
     </div>
   );
 }

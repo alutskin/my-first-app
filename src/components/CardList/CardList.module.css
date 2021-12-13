@@ -1,7 +1,8 @@
-.cards {
+.card-list {
     display: flex;
     justify-content: space-between;
     overflow-x: scroll;
+    height: 68vh;
 }
 
 ::-webkit-scrollbar {

@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import "./Card.css";
+import classes from "./Card.module.css";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { AiFillCloseCircle } from "react-icons/ai";
+import CardHeader from "../CardHeader/CardHeader";
+import CardBody from "../CardBody/CardBody";
 
 function Card(props) {
-  let classNames = require("classnames");
-
   const [editable, setEditable] = useState(false);
   const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
   const [curTextValue, setCurTextValue] = useState(props.text);
@@ -31,9 +31,9 @@ function Card(props) {
   };
 
   const cancelChangesHandler = () => {
-    props.onUpdateContent(props.caption + ' ', props.text + ' ', props.id);
-    setCurCaptionValue(props.caption + ' ');
-    setCurTextValue(props.text + ' ');
+    props.onUpdateContent(props.caption + " ", props.text + " ", props.id);
+    setCurCaptionValue(props.caption + " ");
+    setCurTextValue(props.text + " ");
     setEditable(false);
   };
 
@@ -50,53 +50,51 @@ function Card(props) {
   }
 
   return (
-    <div className={classNames("card", { darkCard: props.checked })}>
-      <h2
-        className={classNames("caption", { darkCaption: props.checked })}
-        contentEditable={editable}
-        onKeyUp={captionChangeHandler}
-      >
-        {props.caption}
-      </h2>
+    <div className={`${classes.card} ${props.checked ? classes["dark-card"] : ""}`}>
+      <CardHeader
+        caption={props.caption}
+        checked={props.checked}
+        editable={editable}
+        captionChangeHandler={captionChangeHandler}
+      />
 
       <input
         type="checkbox"
-        id="one"
+        className={classes["select-checkbox"]}
         checked={props.checked}
-        style={editable ? {display: "none"} : {display: "inline"}}
+        style={editable ? { display: "none" } : { display: "inline" }}
         onChange={checkboxHandler}
       />
 
       <AiFillEdit
-        id="two"
+        className={classes["edit-icon"]}
         color={props.checked ? "#C0C0C0" : "#3f3f3f"}
         visibility={editable || props.readOnly ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
 
       <AiFillCheckCircle
-        id="three"
+        className={classes["save-changes-icon"]}
         color="#3f3f3f"
         visibility={editable ? "visible" : "hidden"}
         onClick={saveChangesHandler}
       />
 
       <AiFillCloseCircle
-        id="four"
+        className={classes["cancel-changes-icon"]}
         color="#3f3f3f"
         visibility={editable ? "visible" : "hidden"}
         onClick={cancelChangesHandler}
       />
 
-      <hr color={props.checked ? "#C0C0C0" : "#3f3f3f"} className="line" />
-      
-      <p
-        className={classNames("text", { darkText: props.checked })}
-        contentEditable={editable}
-        onKeyUp={textChangeHandler}
-      >
-        {props.text}
-      </p>
+      <hr color={props.checked ? "#C0C0C0" : "#3f3f3f"} className={classes.line} />
+
+      <CardBody
+        text={props.text}
+        checked={props.checked}
+        editable={editable}
+        textChangeHandler={textChangeHandler}
+      />
     </div>
   );
 }
