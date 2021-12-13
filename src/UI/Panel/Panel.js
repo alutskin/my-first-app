@@ -6,4 +6,4 @@ const Panel = ({ children }) => {
   return <div className={classes.panel}>{children}</div>;
 };
 
-export default React.memo(Panel);
+export default Panel;

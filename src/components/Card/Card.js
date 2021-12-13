@@ -56,7 +56,7 @@ function Card(props) {
         checked={props.checked}
         editable={editable}
         captionChangeHandler={captionChangeHandler}
-      ></CardHeader>
+      />
 
       <input
         type="checkbox"
@@ -94,7 +94,7 @@ function Card(props) {
         checked={props.checked}
         editable={editable}
         textChangeHandler={textChangeHandler}
-      ></CardBody>
+      />
     </div>
   );
 }
