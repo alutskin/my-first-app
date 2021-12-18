@@ -1,4 +1,4 @@
-.delete-button {
+.add-card-button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -9,11 +9,10 @@
     color: #3f3f3f;
     cursor: pointer;
     border-radius: 5px;
-    margin-right: 10px;
     margin-left: 20px;
 }
 
-.delete-icon {
+.add-card-icon {
     width: 20px;
     height: 20px;
     color: #3f3f3f;
