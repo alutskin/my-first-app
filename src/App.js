@@ -8,6 +8,7 @@ import CardList from "./components/CardList/CardList";
 import DeleteButton from "./components/DeleteButton/DeleteButton";
 import Panel from "./UI/Panel/Panel";
 import AddCardButton from "./components/AddCardButton/AddCardButton";
+import NewCardModal from "./components/NewCardModal/NewCardModal";
 
 const INITIAL_DATA = [
   {
@@ -112,6 +113,7 @@ const ReadOnlyCheckbox = React.memo(styled.input`
 function App() {
   const [appState, setAppState] = useState(INITIAL_DATA);
   const [readOnly, setReadOnly] = useState(false);
+  const [addingCard, setAddingCard] = useState(false);
 
   const updateContentHandler = (newCaption, newText, id) => {
     const newAppState = appState.slice(0);
@@ -141,23 +143,33 @@ function App() {
     setAppState(newAppState);
   };
 
-  const addNewCardHandler = () => {
+  const addNewCardHandler = (caption, text) => {
     const newAppState = appState.slice(0);
     newAppState.unshift({
       id: uuidv4(),
-      caption: "",
-      text: "",
+      caption: caption,
+      text: text,
       checked: false,
     });
+    setAddingCard(false);
     setAppState(newAppState);
   };
 
   return (
-    <div>
+    <React.Fragment>
+      {addingCard && (
+        <NewCardModal
+          onAddNewCard={addNewCardHandler}
+          onClose={() => {
+            setAddingCard(false);
+          }}
+        />
+      )}
+
       <Header />
 
       <Panel>
-        <div style={{marginRight: "auto"}}>
+        <div style={{ marginRight: "auto" }}>
           <ReadOnlyCheckbox
             id="read-only"
             type="checkbox"
@@ -166,7 +178,11 @@ function App() {
           <label htmlFor="read-only">Только просмотр</label>
         </div>
 
-        <AddCardButton onClick={addNewCardHandler} />
+        <AddCardButton
+          onClick={() => {
+            setAddingCard(true);
+          }}
+        />
 
         <DeleteButton onClick={deleteSelectedCardsHandler} />
       </Panel>
@@ -177,7 +193,7 @@ function App() {
         onUpdateContent={updateContentHandler}
         onUpdateCheckedStatus={updateCheckedStatusHandler}
       />
-    </div>
+    </React.Fragment>
   );
 }
 
