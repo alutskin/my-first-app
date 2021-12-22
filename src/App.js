@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import styled from "styled-components";
 
@@ -6,10 +7,12 @@ import Header from "./components/Header/Header";
 import CardList from "./components/CardList/CardList";
 import DeleteButton from "./components/DeleteButton/DeleteButton";
 import Panel from "./UI/Panel/Panel";
+import AddCardButton from "./components/AddCardButton/AddCardButton";
+import NewCardModal from "./components/NewCardModal/NewCardModal";
 
 const INITIAL_DATA = [
   {
-    id: "c1",
+    id: uuidv4(),
     caption: "Таблица цветов",
     text:
       "Для сохранения единообразия страниц, цвета в МедиаВики нужно" +
@@ -21,7 +24,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c2",
+    id: uuidv4(),
     caption: "Значение физической культуры и спорта",
     text:
       "Одной из самых востребованных тем для рефератов по физкультуре" +
@@ -31,7 +34,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c3",
+    id: uuidv4(),
     caption: "История развития физической культуры",
     text:
       "Реферат «История развития физической культуры» является так же одной " +
@@ -41,7 +44,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c4",
+    id: uuidv4(),
     caption: "Таблица цветов",
     text:
       "Для сохранения единообразия страниц, цвета в МедиаВики нужно" +
@@ -53,7 +56,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c5",
+    id: uuidv4(),
     caption: "Значение физической культуры и спорта",
     text:
       "Одной из самых востребованных тем для рефератов по физкультуре" +
@@ -63,7 +66,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c6",
+    id: uuidv4(),
     caption: "История развития физической культуры",
     text:
       "Реферат «История развития физической культуры» является так же одной " +
@@ -73,7 +76,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c7",
+    id: uuidv4(),
     caption: "What Is React?",
     text:
       "React is a declarative, efficient, and flexible JavaScript library for " +
@@ -87,7 +90,7 @@ const INITIAL_DATA = [
     checked: false,
   },
   {
-    id: "c8",
+    id: uuidv4(),
     caption: "Inspecting the Starter Code",
     text:
       "If you’re going to work on the tutorial in your browser, open this code in " +
@@ -110,6 +113,7 @@ const ReadOnlyCheckbox = React.memo(styled.input`
 function App() {
   const [appState, setAppState] = useState(INITIAL_DATA);
   const [readOnly, setReadOnly] = useState(false);
+  const [addingCard, setAddingCard] = useState(false);
 
   const updateContentHandler = (newCaption, newText, id) => {
     const newAppState = appState.slice(0);
@@ -139,12 +143,33 @@ function App() {
     setAppState(newAppState);
   };
 
+  const addNewCardHandler = (caption, text) => {
+    const newAppState = appState.slice(0);
+    newAppState.unshift({
+      id: uuidv4(),
+      caption: caption,
+      text: text,
+      checked: false,
+    });
+    setAddingCard(false);
+    setAppState(newAppState);
+  };
+
   return (
-    <div>
+    <React.Fragment>
+      {addingCard && (
+        <NewCardModal
+          onAddNewCard={addNewCardHandler}
+          onClose={() => {
+            setAddingCard(false);
+          }}
+        />
+      )}
+
       <Header />
 
       <Panel>
-        <div>
+        <div style={{ marginRight: "auto" }}>
           <ReadOnlyCheckbox
             id="read-only"
             type="checkbox"
@@ -152,6 +177,12 @@ function App() {
           />
           <label htmlFor="read-only">Только просмотр</label>
         </div>
+
+        <AddCardButton
+          onClick={() => {
+            setAddingCard(true);
+          }}
+        />
 
         <DeleteButton onClick={deleteSelectedCardsHandler} />
       </Panel>
@@ -162,7 +193,7 @@ function App() {
         onUpdateContent={updateContentHandler}
         onUpdateCheckedStatus={updateCheckedStatusHandler}
       />
-    </div>
+    </React.Fragment>
   );
 }
 

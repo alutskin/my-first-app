@@ -1,14 +1,14 @@
-header {
+.header {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     color: #3f3f3f;
     background-color: #C0C0C0;
-    box-shadow: 1px 1px #808080;
+    box-shadow: 1px 1px 1px #808080;
 }
 
-h1 {
+.h1 {
     font-size: 32pt;
     padding-bottom: 20px;
 }
