@@ -1,13 +1,17 @@
+import withLoadingDelay from "../../UI/withLoadingDelay/withLoadingDelay";
 import Card from "../Card/Card";
 import classes from "./CardList.module.css";
+
+const CardWithDelay = withLoadingDelay(Card);
 
 const CardList = (props) => {
   return (
     <div className={classes["card-list"]}>
       {props.data.map((cardData) => (
-        <Card
+        <CardWithDelay
           id={cardData.id}
           key={cardData.id}
+          styles={{margin: "100px 180px"}}
           caption={cardData.caption}
           text={cardData.text}
           checked={cardData.checked}
