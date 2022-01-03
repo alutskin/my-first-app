@@ -11,7 +11,6 @@ const CardList = (props) => {
         <CardWithDelay
           id={cardData.id}
           key={cardData.id}
-          styles={{margin: "100px 180px"}}
           caption={cardData.caption}
           text={cardData.text}
           checked={cardData.checked}

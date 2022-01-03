@@ -11,13 +11,11 @@ const withLoadingDelay = (Component) => {
       }, 2000);
     }, []);
 
-    const {styles, ...propsForComponent} = props;
-
     return (
       <>
         {mustHaveLoader ? (
           <Loader
-            style={styles}
+            style={{margin: "100px 180px"}}
             type="TailSpin"
             color="#C0C0C0"
             height={100}
@@ -25,7 +23,7 @@ const withLoadingDelay = (Component) => {
             timeout={2000}
           />
         ) : (
-          <Component {...propsForComponent} />
+          <Component {...props} />
         )}
       </>
     );
