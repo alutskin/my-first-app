@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import PropTypes from 'prop-types';
 
 import classes from "./Card.module.css";
 import { AiFillEdit } from "react-icons/ai";
@@ -6,32 +7,34 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { AiFillCloseCircle } from "react-icons/ai";
 import CardHeader from "../CardHeader/CardHeader";
 import CardBody from "../CardBody/CardBody";
+import DataContext from "../../store/data-context";
 
 function Card(props) {
   const [editable, setEditable] = useState(false);
   const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
   const [curTextValue, setCurTextValue] = useState(props.text);
+  const dataCtx = useContext(DataContext);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
-      props.onUpdateCheckedStatus(true, props.id);
+      dataCtx.onUpdateCheckedStatus(true, props.id);
     } else {
-      props.onUpdateCheckedStatus(false, props.id);
+      dataCtx.onUpdateCheckedStatus(false, props.id);
     }
   };
 
   const editClickHandler = () => {
     setEditable(true);
-    props.onUpdateCheckedStatus(false, props.id);
+    dataCtx.onUpdateCheckedStatus(false, props.id);
   };
 
   const saveChangesHandler = () => {
-    props.onUpdateContent(curCaptionValue, curTextValue, props.id);
+    dataCtx.onUpdateContent(curCaptionValue, curTextValue, props.id);
     setEditable(false);
   };
 
   const cancelChangesHandler = () => {
-    props.onUpdateContent(props.caption + " ", props.text + " ", props.id);
+    dataCtx.onUpdateContent(props.caption + " ", props.text + " ", props.id);
     setCurCaptionValue(props.caption + " ");
     setCurTextValue(props.text + " ");
     setEditable(false);
@@ -45,7 +48,7 @@ function Card(props) {
     setCurTextValue(event.target.textContent);
   };
 
-  if (editable && props.readOnly) {
+  if (editable && dataCtx.readOnly) {
     cancelChangesHandler();
   }
 
@@ -69,7 +72,7 @@ function Card(props) {
       <AiFillEdit
         className={classes["edit-icon"]}
         color={props.checked ? "#C0C0C0" : "#3f3f3f"}
-        visibility={editable || props.readOnly ? "hidden" : "visible"}
+        visibility={editable || dataCtx.readOnly ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
 
@@ -98,5 +101,12 @@ function Card(props) {
     </div>
   );
 }
+
+Card.propTypes = {
+  id: PropTypes.string,
+  caption: PropTypes.string,
+  text: PropTypes.string,
+  checked: PropTypes.bool,
+};
 
 export default Card;

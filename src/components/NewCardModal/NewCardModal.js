@@ -1,19 +1,21 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 
 import classes from "./NewCardModal.module.css";
+import DataContext from "../../store/data-context";
 
-const NewCardModal = ({ onAddNewCard, onClose }) => {
+const NewCardModal = () => {
     const headingValue = useRef();
     const cardBodyValue = useRef();
+    const dataCtx = useContext(DataContext);
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        onAddNewCard(headingValue.current.value, cardBodyValue.current.value);
+        dataCtx.onAddNewCard(headingValue.current.value, cardBodyValue.current.value);
     };
 
   return (
     <React.Fragment>
-      <div className={classes.background} onClick={onClose} />
+      <div className={classes.background} onClick={dataCtx.onCloseAddNewCardWindow} />
 
       <div className={classes.modal}>
         <header>

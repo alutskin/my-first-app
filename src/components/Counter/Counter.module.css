@@ -1,0 +1,18 @@
+.counter {
+    position: absolute;
+    right: 20px;
+    top: 95px;
+    background-color: #3f3f3f;
+    color: #c0c0c0;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 12pt;
+}
+
+.number {
+    background-color: #c0c0c0;
+    color: #3f3f3f;
+    padding: 0px 5px;
+    border-radius: 3px;
+    margin: 2px;
+}
