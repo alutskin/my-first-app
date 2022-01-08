@@ -19,6 +19,9 @@ const CardList = () => {
           caption={cardData.caption}
           text={cardData.text}
           checked={cardData.checked}
+          readOnly={dataCtx.readOnly}
+          onUpdateCheckedStatus={dataCtx.onUpdateCheckedStatus}
+          onUpdateContent={dataCtx.onUpdateContent}
         />
       ))}
     </div>

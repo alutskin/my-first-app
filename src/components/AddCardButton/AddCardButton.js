@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 import classes from "./AddCardButton.module.css";
-import DataContext from "../../store/data-context";
 
-const AddCardButton = () => {
-  const dataCtx = useContext(DataContext);
-
+const AddCardButton = ({ onClick }) => {
   return (
     <button
       className={classes["add-card-button"]}
-      onClick={dataCtx.onStartAddNewCard}
+      onClick={onClick}
     >
       <AiFillPlusCircle className={classes["add-card-icon"]} />
       Добавить карточку

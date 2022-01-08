@@ -36,9 +36,9 @@ function App() {
           <label htmlFor="read-only">Только просмотр</label>
         </div>
 
-        <AddCardButton />
+        <AddCardButton onClick={dataCtx.onStartAddNewCard} />
 
-        <DeleteButton />
+        <DeleteButton onClick={dataCtx.onDeleteSelectedCards} />
       </Panel>
 
       <CardList />
