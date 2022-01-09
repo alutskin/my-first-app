@@ -5,7 +5,10 @@ import classes from "./AddCardButton.module.css";
 
 const AddCardButton = ({ onClick }) => {
   return (
-    <button className={classes["add-card-button"]} onClick={onClick}>
+    <button
+      className={classes["add-card-button"]}
+      onClick={onClick}
+    >
       <AiFillPlusCircle className={classes["add-card-icon"]} />
       Добавить карточку
     </button>

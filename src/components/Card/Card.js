@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 import classes from "./Card.module.css";
 import { AiFillEdit } from "react-icons/ai";
@@ -98,5 +99,15 @@ function Card(props) {
     </div>
   );
 }
+
+Card.propTypes = {
+  id: PropTypes.string,
+  caption: PropTypes.string,
+  text: PropTypes.string,
+  checked: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  onUpdateCheckedStatus: PropTypes.func,
+  onUpdateContent: PropTypes.func,
+};
 
 export default Card;

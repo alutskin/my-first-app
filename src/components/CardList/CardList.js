@@ -1,22 +1,27 @@
+import { useContext } from "react";
+
 import withLoadingDelay from "../../UI/withLoadingDelay/withLoadingDelay";
 import Card from "../Card/Card";
 import classes from "./CardList.module.css";
+import DataContext from "../../store/data-context";
 
 const CardWithDelay = withLoadingDelay(Card);
 
-const CardList = (props) => {
+const CardList = () => {
+  const dataCtx = useContext(DataContext);
+
   return (
     <div className={classes["card-list"]}>
-      {props.data.map((cardData) => (
+      {dataCtx.cardsData.map((cardData) => (
         <CardWithDelay
           id={cardData.id}
           key={cardData.id}
           caption={cardData.caption}
           text={cardData.text}
           checked={cardData.checked}
-          readOnly={props.readOnly}
-          onUpdateContent={props.onUpdateContent}
-          onUpdateCheckedStatus={props.onUpdateCheckedStatus}
+          readOnly={dataCtx.readOnly}
+          onUpdateCheckedStatus={dataCtx.onUpdateCheckedStatus}
+          onUpdateContent={dataCtx.onUpdateContent}
         />
       ))}
     </div>
