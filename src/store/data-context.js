@@ -29,18 +29,16 @@ export const DataContextProvider = ({ children }) => {
         "https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json"
       );
 
-      const data = response.data;
+      const data = response.data.slice(0, 15);
 
-      for (let i = 0; i < 15; i++) {
-        let card = {
+      cards = data.map((element) => {
+        return {
           id: uuidv4(),
-          caption: data[i].Name,
-          text: data[i].About,
+          caption: element.Name,
+          text: element.About,
           checked: false,
         };
-
-        cards.push(card);
-      }
+      });
     } catch (error) {}
 
     setAppState(cards);
