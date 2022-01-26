@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    box-shadow: 1px 1px 4px rgb(22, 22, 22);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.336);
     background-color: #C0C0C0;
     border: none;
     font-size: 16pt;

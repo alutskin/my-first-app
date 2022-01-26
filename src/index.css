@@ -13,6 +13,7 @@ body {
   background-color: #3f3f3f;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 label[for="read-only"] {

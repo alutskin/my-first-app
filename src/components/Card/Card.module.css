@@ -6,6 +6,7 @@
     text-align: center;
     margin: 20px 30px 20px;
     background-color: #A9A9A9;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.336);
     width: 400px;
     height: fit-content;
     border-radius: 12px;

@@ -1,8 +1,10 @@
 .card-list {
     display: flex;
     justify-content: space-between;
+    padding-top: 10px;
     overflow-x: scroll;
-    height: 68vh;
+    /* 246.58px is a height required for Header and Panel components */
+    height: calc(100vh - 246.58px);
 }
 
 ::-webkit-scrollbar {
