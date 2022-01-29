@@ -4,18 +4,18 @@
     align-items: center;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.336);
     background-color: #C0C0C0;
-    border: none;
-    font-size: 16pt;
+    border: 1px solid #C0C0C0;
+    font-size: 1.3rem;
     color: #3f3f3f;
     cursor: pointer;
     border-radius: 5px;
-    margin-right: 10px;
-    margin-left: 20px;
+    margin: 0 1rem;
+    padding: 0.5rem 1.5rem;
 }
 
 .delete-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.2rem;
+    height: 1.2rem;
     color: #3f3f3f;
-    margin: 5px;
+    margin: 0.25rem;
 }

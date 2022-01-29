@@ -43,6 +43,8 @@ const Home = () => {
         <DeleteButton onClick={dataCtx.onDeleteSelectedCards} />
       </Panel>
 
+      <hr color="#c0c0c0" size="5" />
+
       <CardList />
     </Fragment>
   );

@@ -4,10 +4,10 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 20px 30px 20px;
+    margin: 20px 30px;
     background-color: #A9A9A9;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.336);
-    width: 400px;
+    width: 350px;
     height: fit-content;
     border-radius: 12px;
 }
@@ -19,20 +19,20 @@
 .select-checkbox {
     position: absolute;
     top: 10px;
-    left: 370px;
+    left: 320px;
     height: 17px;
     width: 17px;
 }
 
 .line {
-    width: 400px;
+    width: 350px;
     border-width: 1.5px;
 }
 
 .edit-icon, .save-changes-icon, .cancel-changes-icon {
     position: absolute;
     top: 13px;
-    left: 350px;
+    left: 300px;
     width: 17px;
     height: 17px;
 }
@@ -44,5 +44,5 @@
 }
 
 .cancel-changes-icon {
-    left: 375px;
+    left: 325px;
 }
