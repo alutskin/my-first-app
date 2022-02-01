@@ -15,7 +15,7 @@ const withLoadingDelay = (Component) => {
       <>
         {mustHaveLoader ? (
           <Loader
-            style={{margin: "100px 180px"}}
+            style={{margin: "100px 155px"}}
             type="TailSpin"
             color="#C0C0C0"
             height={100}

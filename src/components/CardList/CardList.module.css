@@ -1,8 +1,9 @@
 .card-list {
     display: flex;
     justify-content: space-between;
-    overflow-x: scroll;
-    height: 68vh;
+    padding-top: 50px;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 ::-webkit-scrollbar {

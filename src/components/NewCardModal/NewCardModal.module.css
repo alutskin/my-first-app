@@ -37,14 +37,13 @@
     font-family: inherit;
     color: #C0C0C0;
     font-size: 13pt;
-    border-radius: 5px;
-    transition: border-radius, background-color 1s;
+    border-radius: 6px;
+    transition: border-radius 1s;
     background-color: #3f3f3f;
-    
+    padding: 0.25rem;
 }
 
 .modal input:focus, .modal textarea:focus {
-    border-radius: 7px;
     background-color: #C0C0C0;
     color: #3f3f3f;
 }

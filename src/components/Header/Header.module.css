@@ -2,12 +2,43 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
     color: #3f3f3f;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.336);
     background-color: #C0C0C0;
 }
 
 .h1 {
-    font-size: 32pt;
-    padding-bottom: 20px;
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+.header ul {
+    list-style: none;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    padding: 0;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+}
+
+.header nav li {
+    margin: 0 1rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.header a {
+    text-decoration: none;
+    color: #3f3f3f;
+    padding-bottom: 0.25rem;
+}
+
+.header a:active, .header a:hover, .header a.active {
+    border-bottom: 2px solid #3f3f3f;
 }
