@@ -6,50 +6,66 @@ import Input from "../Input/Input";
 const emailValidation = (email) => /\w+@\w+\.\w+/.test(email);
 
 const passwordValidation = (pass) =>
-  pass.length >= 8 && /\w/.test(pass) && /\d/.test(pass);
+  pass.length >= 8 && /[A-Za-z_]/.test(pass) && /\d/.test(pass);
 
-const INPUTS_COUNT = 2;
+const INPUTS = [
+  {
+    id: "username",
+    type: "email",
+    label: "Username",
+    placeholder: "abc@fg.hi",
+    errorText: 'Username must be an email with the next format: "abc@fg.hi"',
+    required: true,
+    isValid: false,
+    validation: emailValidation,
+  },
+  {
+    id: "pass",
+    type: "password",
+    label: "Password",
+    placeholder: "",
+    errorText:
+      "Password must have at least 7 symbols length, 1 letter and 1 number",
+    required: true,
+    isValid: false,
+    validation: passwordValidation,
+  },
+];
 
 const SignInForm = () => {
-  const [validInputsIds, setValidInputsIds] = useState([]);
+  const [inputsValidity, setInputsValidity] = useState(
+    INPUTS.map(({ id, isValid }) => {
+      return { id, isValid };
+    })
+  );
 
-  const changeValidInputsIds = ({ typeOfChange, inputId }) => {
-    const idIsAlreadyContained = validInputsIds.includes(inputId);
-
-    if (typeOfChange === "add" && !idIsAlreadyContained) {
-      let newState = validInputsIds.slice();
-      newState.push(inputId);
-      setValidInputsIds(newState);
-    } else if (typeOfChange === "remove" && idIsAlreadyContained) {
-      let newState = validInputsIds.filter((someId) => someId !== inputId);
-      setValidInputsIds(newState);
-    }
+  const changeInputVilidity = (id, validity) => {
+    let newState = inputsValidity.slice();
+    let requestedInput = newState.find((inputData) => inputData.id === id);
+    requestedInput.isValid = validity;
+    setInputsValidity(newState);
   };
 
-  const formIsValid = validInputsIds.length === INPUTS_COUNT;
+  const formIsValid = inputsValidity.reduce(
+    (prev, cur) => prev.isValid && cur.isValid
+  );
 
   return (
     <div className={classes.wrapper}>
       <form className={classes.form}>
-        <Input
-          id="username"
-          type="email"
-          label="Username"
-          placeholder="abc@fg.hi"
-          errorText='Username must be an email with the next format: "abc@fg.hi"'
-          required={true}
-          validation={emailValidation}
-          onChangeValidInputsIds={changeValidInputsIds}
-        />
-        <Input
-          id="pass"
-          type="password"
-          label="Password"
-          errorText="Password must have at least 7 symbols length, 1 letter and 1 number"
-          required={true}
-          validation={passwordValidation}
-          onChangeValidInputsIds={changeValidInputsIds}
-        />
+        {INPUTS.map((input) => (
+          <Input
+            id={input.id}
+            key={input.id}
+            type={input.type}
+            label={input.label}
+            placeholder={input.placeholder}
+            errorText={input.errorText}
+            required={input.required}
+            validation={input.validation}
+            onChangeInputValidity={changeInputVilidity}
+          />
+        ))}
         <div className={classes.butField}>
           <button
             className={classes.submButton}

@@ -9,18 +9,11 @@ const Input = (props) => {
   const valueIsValid = props.validation(value);
   const inputHasError = !valueIsValid && isTouched;
 
-  const { id, onChangeValidInputsIds } = props;
+  const { id } = props;
 
   useEffect(() => {
-    if (valueIsValid) {
-      onChangeValidInputsIds({ typeOfChange: "add", inputId: id });
-    } else {
-      onChangeValidInputsIds({
-        typeOfChange: "remove",
-        inputId: id,
-      });
-    }
-  }, [valueIsValid, id, onChangeValidInputsIds]);
+    props.onChangeInputValidity(id, valueIsValid); // eslint-disable-next-line
+  }, [id, valueIsValid]);
 
   const inputChangeHandler = (event) => {
     setValue(event.target.value);
