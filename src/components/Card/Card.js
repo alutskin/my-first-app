@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import classes from "./Card.module.css";
 import { AiFillEdit } from "react-icons/ai";
@@ -7,11 +7,13 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { AiFillCloseCircle } from "react-icons/ai";
 import CardHeader from "../CardHeader/CardHeader";
 import CardBody from "../CardBody/CardBody";
+import { useNavigate } from "react-router-dom";
 
 function Card(props) {
   const [editable, setEditable] = useState(false);
   const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
   const [curTextValue, setCurTextValue] = useState(props.text);
+  const navigate = useNavigate();
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
@@ -46,12 +48,21 @@ function Card(props) {
     setCurTextValue(event.target.textContent);
   };
 
+  const cardDoubleClickHandler = () => {
+    if (!editable) {
+      navigate(`/card/${props.id}`);
+    }
+  };
+
   if (editable && props.readOnly) {
     cancelChangesHandler();
   }
 
   return (
-    <div className={`${classes.card} ${props.checked ? classes["dark-card"] : ""}`}>
+    <div
+      className={`${classes.card} ${props.checked ? classes["dark-card"] : ""}`}
+      onDoubleClick={cardDoubleClickHandler}
+    >
       <CardHeader
         caption={props.caption}
         checked={props.checked}
@@ -88,7 +99,10 @@ function Card(props) {
         onClick={cancelChangesHandler}
       />
 
-      <hr color={props.checked ? "#C0C0C0" : "#3f3f3f"} className={classes.line} />
+      <hr
+        color={props.checked ? "#C0C0C0" : "#3f3f3f"}
+        className={classes.line}
+      />
 
       <CardBody
         text={props.text}

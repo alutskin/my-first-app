@@ -1,38 +1,59 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef } from "react";
 
 import classes from "./NewCardModal.module.css";
-import DataContext from "../../store/data-context";
+import { useDispatch } from "react-redux";
 
 const NewCardModal = () => {
-    const headingValue = useRef();
-    const cardBodyValue = useRef();
-    const dataCtx = useContext(DataContext);
+  const headingValue = useRef();
+  const cardBodyValue = useRef();
+  const dispatch = useDispatch();
 
-    const formSubmitHandler = (event) => {
-        event.preventDefault();
-        dataCtx.onAddNewCard(headingValue.current.value, cardBodyValue.current.value);
-    };
+  const formSubmitHandler = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: "add-new-card",
+      caption: headingValue.current.value,
+      text: cardBodyValue.current.value,
+    });
+  };
+
+  const closeAddNewCardWindowHandler = () => {
+    dispatch({ type: "close-add-new-card-window" });
+  };
 
   return (
     <React.Fragment>
-      <div className={classes.background} onClick={dataCtx.onCloseAddNewCardWindow} />
+      <div
+        className={classes.background}
+        onClick={closeAddNewCardWindowHandler}
+      />
 
       <div className={classes.modal}>
         <header>
           <h2>Создать новую карточку</h2>
         </header>
 
-        <hr color="#C0C0C0" style={{borderWidth: "1.2px"}} />
+        <hr color="#C0C0C0" style={{ borderWidth: "1.2px" }} />
 
         <form onSubmit={formSubmitHandler}>
           <div>
             <label htmlFor="heading">Заголовок:</label>
-            <input id="heading" type="text" ref={headingValue} autoComplete="off" />
+            <input
+              id="heading"
+              type="text"
+              ref={headingValue}
+              autoComplete="off"
+            />
           </div>
 
           <div>
             <label htmlFor="body">Текст:</label>
-            <textarea id="body" type="text" style={{height: "130px"}} ref={cardBodyValue} />
+            <textarea
+              id="body"
+              type="text"
+              style={{ height: "130px" }}
+              ref={cardBodyValue}
+            />
           </div>
 
           <button type="submit">Сохранить</button>

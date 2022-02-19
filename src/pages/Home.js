@@ -1,14 +1,15 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 
 import Header from "../components/Header/Header";
 import CardList from "../components/CardList/CardList";
-import DeleteButton from "../components/DeleteButton/DeleteButton";
 import Panel from "../UI/Panel/Panel";
-import AddCardButton from "../components/AddCardButton/AddCardButton";
 import NewCardModal from "../components/NewCardModal/NewCardModal";
-import DataContext from "../store/data-context";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Counter from "../components/Counter/Counter";
+import Button from "../UI/Button/Button";
+import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 
 const ReadOnlyCheckbox = React.memo(styled.input`
   margin-right: 10px;
@@ -18,14 +19,27 @@ const ReadOnlyCheckbox = React.memo(styled.input`
 `);
 
 const Home = () => {
-  const dataCtx = useContext(DataContext);
+  const addingCard = useSelector((store) => store.addingCard);
+  const dispatch = useDispatch();
+
+  const changeReadOnlyStatusHandler = (event) => {
+    dispatch({ type: "change-read-only-status", event });
+  };
+
+  const startAddNewCardHandler = () => {
+    dispatch({ type: "start-add-new-card" });
+  };
+
+  const deleteSeletedCardsHandler = () => {
+    dispatch({ type: "delete-selected-cards" });
+  };
 
   return (
     <Fragment>
-      {dataCtx.addingCard && <NewCardModal />}
+      {addingCard && <NewCardModal />}
 
-      <Header text="Great Cards" >
-          <Counter />
+      <Header text="Great Cards">
+        <Counter />
       </Header>
 
       <Panel>
@@ -33,14 +47,21 @@ const Home = () => {
           <ReadOnlyCheckbox
             id="read-only"
             type="checkbox"
-            onChange={dataCtx.onSetReadOnlyStatus}
+            onChange={changeReadOnlyStatusHandler}
           />
           <label htmlFor="read-only">Только просмотр</label>
         </div>
 
-        <AddCardButton onClick={dataCtx.onStartAddNewCard} />
+        <Button text="Добавить карточку" onClick={startAddNewCardHandler}>
+          <AiFillPlusCircle />
+        </Button>
 
-        <DeleteButton onClick={dataCtx.onDeleteSelectedCards} />
+        <Button
+          text="Удалить выбранные карточки"
+          onClick={deleteSeletedCardsHandler}
+        >
+          <AiFillDelete />
+        </Button>
       </Panel>
 
       <hr color="#c0c0c0" size="5" />
