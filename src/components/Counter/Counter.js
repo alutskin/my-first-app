@@ -1,15 +1,12 @@
-import { useContext } from "react";
-
 import classes from "./Counter.module.css";
-import DataContext from "../../store/data-context";
+import { useSelector } from "react-redux";
 
 const Counter = () => {
-  const dataCtx = useContext(DataContext);
+  const cardsData = useSelector((store) => store.cardsData);
 
   return (
     <div className={classes.counter}>
-      Карточки{" "}
-      <span className={classes.number}>{dataCtx.cardsData.length}</span>
+      Карточки <span className={classes.number}>{cardsData.length}</span>
     </div>
   );
 };
