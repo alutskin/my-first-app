@@ -1,5 +1,6 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { v4 as uuidv4 } from "uuid";
+import thunk from "redux-thunk";
 
 const INITIAL_STATE = {
   cardsData: [],
@@ -8,6 +9,9 @@ const INITIAL_STATE = {
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
+  const { type, ...payload } = action;
+  console.log("Type: ", type, ". Params: ", payload);
+
   if (action.type === "update_card_content") {
     const newAppState = state.cardsData.slice();
     const card = newAppState.find((data) => data.id === action.id);
@@ -96,6 +100,6 @@ const reducer = (state = INITIAL_STATE, action) => {
   return state;
 };
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
