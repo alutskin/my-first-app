@@ -1,7 +1,7 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-export const getCards = async dispatch => {
+export const fetchCards = async () => {
     let cards = [];
 
     try {
@@ -20,7 +20,9 @@ export const getCards = async dispatch => {
             };
         });
 
-    } catch (error) { }
+    } catch (error) { 
+        console.log("ERROR: ", error);
+    }
 
-    dispatch({ type: "fetch-data", cards });
+    return cards;
 };

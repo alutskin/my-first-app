@@ -5,13 +5,24 @@ import CardDetails from "./pages/CardDetails";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
-import { getCards } from "./store/getCards";
+import { fetchCards } from "./store/fetchCards";
+
+const getCards = () => {
+  return async (dispatch) => {
+    try {
+      const fetchedData = await fetchCards();
+      dispatch({ type: 'fetch-data', cards: fetchedData });
+    } catch (e) {
+      console.log("App.js ERROR: can't fetch cards in getCards method.");
+    }
+  };
+};
 
 
 function App() {
   const dispatch = useDispatch();
 
-  getCards(dispatch);
+  dispatch(getCards());
 
   return (
     <Routes>
