@@ -1,41 +1,28 @@
-import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 import CardDetails from "./pages/CardDetails";
 
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
+import { fetchCards } from "./store/fetchCards";
+
+const getCards = () => {
+  return async (dispatch) => {
+    try {
+      const fetchedData = await fetchCards();
+      dispatch({ type: 'fetch-data', cards: fetchedData });
+    } catch (e) {
+      console.log("App.js ERROR: can't fetch cards in getCards method.");
+    }
+  };
+};
+
 
 function App() {
   const dispatch = useDispatch();
 
-  const getCards = useCallback(async () => {
-    let cards = [];
-
-    try {
-      const response = await axios.get(
-        "https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json"
-      );
-
-      const data = response.data.slice(0, 15);
-
-      cards = data.map((element) => {
-        return {
-          id: uuidv4(),
-          caption: element.Name,
-          text: element.About,
-          checked: false,
-        };
-      });
-    } catch (error) {}
-
-    dispatch({ type: "fetch-data", cards });
-  }, [dispatch]);
-
-  getCards();
+  dispatch(getCards());
 
   return (
     <Routes>
