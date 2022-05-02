@@ -11,6 +11,7 @@ import {
 import classes from "./SpecifiedCard.module.css";
 import Panel from "../../UI/Panel/Panel";
 import Button from "../../UI/Button/Button";
+import { rootActions } from "../../store/rootSlice";
 
 const SpecifiedCard = ({ cardData }) => {
   const [editable, setEditable] = useState(false);
@@ -25,24 +26,22 @@ const SpecifiedCard = ({ cardData }) => {
 
   const saveCardChangesHandler = () => {
     setEditable(false);
-    dispatch({
-      type: "update_card_content",
+    dispatch(rootActions.updateCardContent({
       id: cardData.id,
       newCaption: caption,
       newText: text,
-    });
+    }));
   };
 
   const cancelCardChangesHandler = () => {
     setEditable(false);
     setCaption(cardData.caption);
     setText(cardData.text);
-    dispatch({
-      type: "update_card_content",
+    dispatch(rootActions.updateCardContent({
       id: cardData.id,
       newCaption: cardData.caption + " ",
       newText: cardData.text + " ",
-    });
+    }));
   };
 
   const backHandler = () => {

@@ -10,6 +10,7 @@ import Counter from "../components/Counter/Counter";
 import Button from "../UI/Button/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
+import { rootActions } from "../store/rootSlice";
 
 const ReadOnlyCheckbox = React.memo(styled.input`
   margin-right: 10px;
@@ -19,19 +20,19 @@ const ReadOnlyCheckbox = React.memo(styled.input`
 `);
 
 const Home = () => {
-  const addingCard = useSelector((store) => store.addingCard);
+  const addingCard = useSelector((store) => store.root.addingCard);
   const dispatch = useDispatch();
 
   const changeReadOnlyStatusHandler = (event) => {
-    dispatch({ type: "change-read-only-status", event });
+    dispatch(rootActions.changeReadOnlyStatus(event));
   };
 
   const startAddNewCardHandler = () => {
-    dispatch({ type: "start-add-new-card" });
+    dispatch(rootActions.startAddNewCard());
   };
 
   const deleteSeletedCardsHandler = () => {
-    dispatch({ type: "delete-selected-cards" });
+    dispatch(rootActions.deleteSelectedCards());
   };
 
   return (

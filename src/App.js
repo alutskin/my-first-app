@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import CardDetails from "./pages/CardDetails";
+import { rootActions } from "./store/rootSlice";
 
+import CardDetails from "./pages/CardDetails";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
@@ -11,7 +12,7 @@ const getCards = () => {
   return async (dispatch) => {
     try {
       const fetchedData = await fetchCards();
-      dispatch({ type: 'fetch-data', cards: fetchedData });
+      dispatch(rootActions.fetchData(fetchedData));
     } catch (e) {
       console.log("App.js ERROR: can't fetch cards in getCards method.");
     }
