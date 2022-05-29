@@ -15,6 +15,7 @@ const NewCardModal = () => {
       caption: headingValue.current.value,
       text: cardBodyValue.current.value,
     }));
+    dispatch(rootActions.closeAddNewCardWindow());
   };
 
   const closeAddNewCardWindowHandler = () => {

@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import classes from "./Input.module.css";
 
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
   const [value, setValue] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
@@ -28,6 +28,7 @@ const Input = (props) => {
       <label htmlFor={id}>{props.label}</label>
       <input
         id={id}
+        ref={ref}
         type={props.type}
         required={props.required}
         value={value}
@@ -40,6 +41,6 @@ const Input = (props) => {
       )}
     </div>
   );
-};
+});
 
 export default Input;

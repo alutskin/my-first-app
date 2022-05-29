@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AiFillEdit,
   AiFillCheckCircle,
@@ -17,6 +17,7 @@ const SpecifiedCard = ({ cardData }) => {
   const [editable, setEditable] = useState(false);
   const [caption, setCaption] = useState(cardData.caption);
   const [text, setText] = useState(cardData.text);
+  const readOnly = useSelector(store => store.root.readOnly);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -79,9 +80,11 @@ const SpecifiedCard = ({ cardData }) => {
       <Panel>
         {!editable && (
           <Fragment>
-            <Button text="Изменить" onClick={startEditCardHandler}>
-              <AiFillEdit />
-            </Button>
+            {!readOnly &&
+              <Button text="Изменить" onClick={startEditCardHandler}>
+                <AiFillEdit />
+              </Button>
+            }
             <Button text="Назад" onClick={backHandler}>
               <AiOutlineDoubleLeft />
             </Button>
