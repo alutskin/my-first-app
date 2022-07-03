@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AiFillEdit,
   AiFillCheckCircle,
@@ -11,11 +11,13 @@ import {
 import classes from "./SpecifiedCard.module.css";
 import Panel from "../../UI/Panel/Panel";
 import Button from "../../UI/Button/Button";
+import { rootActions } from "../../store/rootSlice";
 
 const SpecifiedCard = ({ cardData }) => {
   const [editable, setEditable] = useState(false);
   const [caption, setCaption] = useState(cardData.caption);
   const [text, setText] = useState(cardData.text);
+  const readOnly = useSelector(store => store.root.readOnly);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,24 +27,22 @@ const SpecifiedCard = ({ cardData }) => {
 
   const saveCardChangesHandler = () => {
     setEditable(false);
-    dispatch({
-      type: "update_card_content",
+    dispatch(rootActions.updateCardContent({
       id: cardData.id,
       newCaption: caption,
       newText: text,
-    });
+    }));
   };
 
   const cancelCardChangesHandler = () => {
     setEditable(false);
     setCaption(cardData.caption);
     setText(cardData.text);
-    dispatch({
-      type: "update_card_content",
+    dispatch(rootActions.updateCardContent({
       id: cardData.id,
       newCaption: cardData.caption + " ",
       newText: cardData.text + " ",
-    });
+    }));
   };
 
   const backHandler = () => {
@@ -80,9 +80,11 @@ const SpecifiedCard = ({ cardData }) => {
       <Panel>
         {!editable && (
           <Fragment>
-            <Button text="Изменить" onClick={startEditCardHandler}>
-              <AiFillEdit />
-            </Button>
+            {!readOnly &&
+              <Button text="Изменить" onClick={startEditCardHandler}>
+                <AiFillEdit />
+              </Button>
+            }
             <Button text="Назад" onClick={backHandler}>
               <AiOutlineDoubleLeft />
             </Button>

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 import classes from "./NewCardModal.module.css";
 import { useDispatch } from "react-redux";
+import { rootActions } from "../../store/rootSlice";
 
 const NewCardModal = () => {
   const headingValue = useRef();
@@ -10,15 +11,15 @@ const NewCardModal = () => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch({
-      type: "add-new-card",
+    dispatch(rootActions.addNewCard({
       caption: headingValue.current.value,
       text: cardBodyValue.current.value,
-    });
+    }));
+    dispatch(rootActions.closeAddNewCardWindow());
   };
 
   const closeAddNewCardWindowHandler = () => {
-    dispatch({ type: "close-add-new-card-window" });
+    dispatch(rootActions.closeAddNewCardWindow());
   };
 
   return (

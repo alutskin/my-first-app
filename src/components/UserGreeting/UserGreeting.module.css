@@ -1,0 +1,7 @@
+.greeting {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #3f3f3f;
+    font-size: 1.25rem;
+}

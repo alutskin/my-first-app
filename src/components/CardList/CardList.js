@@ -2,20 +2,21 @@ import withLoadingDelay from "../../UI/withLoadingDelay/withLoadingDelay";
 import Card from "../Card/Card";
 import classes from "./CardList.module.css";
 import { useSelector, useDispatch } from "react-redux";
+import { rootActions } from "../../store/rootSlice";
 
 const CardWithDelay = withLoadingDelay(Card);
 
 const CardList = () => {
-  const cardsData = useSelector((store) => store.cardsData);
-  const readOnly = useSelector((store) => store.readOnly);
+  const cardsData = useSelector((store) => store.root.cardsData);
+  const readOnly = useSelector((store) => store.root.readOnly);
   const dispatch = useDispatch();
 
   const updateCheckedStatusHandler = (status, id) => {
-    dispatch({ type: "update_checked_status", id, status });
+    dispatch(rootActions.updateCheckedStatus({ id, status }));
   };
 
   const updateContentHandler = (newCaption, newText, id) => {
-    dispatch({ type: "update_card_content", newCaption, newText, id });
+    dispatch(rootActions.updateCardContent({ id, newCaption, newText }));
   };
 
   return (

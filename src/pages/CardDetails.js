@@ -6,7 +6,7 @@ import SpecifiedCard from "../components/SpecifiedCard/SpecifiedCard";
 import NotFound from "./NotFound";
 
 const CardDetails = () => {
-  const cardsData = useSelector((store) => store.cardsData);
+  const cardsData = useSelector((store) => store.root.cardsData);
   const { id } = useParams();
   const currentCard = cardsData.find((card) => card.id === id);
 
