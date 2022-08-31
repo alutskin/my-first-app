@@ -35,8 +35,8 @@ function Card(props) {
 
   const cancelChangesHandler = () => {
     props.onUpdateContent(props.caption + " ", props.text + " ", props.id);
-    setCurCaptionValue(props.caption + " ");
-    setCurTextValue(props.text + " ");
+    setCurCaptionValue(props.caption);
+    setCurTextValue(props.text);
     setEditable(false);
   };
 
