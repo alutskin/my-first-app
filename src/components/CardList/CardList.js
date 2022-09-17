@@ -3,6 +3,7 @@ import Card from "../Card/Card";
 import classes from "./CardList.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { rootActions } from "../../store/rootSlice";
+import { useCallback } from "react";
 
 const CardWithDelay = withLoadingDelay(Card);
 
@@ -11,13 +12,13 @@ const CardList = () => {
   const readOnly = useSelector((store) => store.root.readOnly);
   const dispatch = useDispatch();
 
-  const updateCheckedStatusHandler = (status, id) => {
+  const updateCheckedStatusHandler = useCallback((status, id) => {
     dispatch(rootActions.updateCheckedStatus({ id, status }));
-  };
+  }, [dispatch]);
 
-  const updateContentHandler = (newCaption, newText, id) => {
+  const updateContentHandler = useCallback((newCaption, newText, id) => {
     dispatch(rootActions.updateCardContent({ id, newCaption, newText }));
-  };
+  }, [dispatch]);
 
   return (
     <div className={classes["card-list"]}>
