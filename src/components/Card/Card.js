@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import PropTypes from "prop-types";
 
 import classes from "./Card.module.css";
@@ -34,18 +34,17 @@ function Card(props) {
   };
 
   const cancelChangesHandler = () => {
-    props.onUpdateContent(props.caption + " ", props.text + " ", props.id);
     setCurCaptionValue(props.caption);
     setCurTextValue(props.text);
     setEditable(false);
   };
 
   const captionChangeHandler = (event) => {
-    setCurCaptionValue(event.target.textContent);
+    setCurCaptionValue(event.target.value);
   };
 
   const textChangeHandler = (event) => {
-    setCurTextValue(event.target.textContent);
+    setCurTextValue(event.target.value);
   };
 
   const cardDoubleClickHandler = () => {
@@ -64,7 +63,7 @@ function Card(props) {
       onDoubleClick={cardDoubleClickHandler}
     >
       <CardHeader
-        caption={props.caption}
+        caption={curCaptionValue}
         checked={props.checked}
         editable={editable}
         captionChangeHandler={captionChangeHandler}
@@ -105,7 +104,7 @@ function Card(props) {
       />
 
       <CardBody
-        text={props.text}
+        text={curTextValue}
         checked={props.checked}
         editable={editable}
         textChangeHandler={textChangeHandler}
@@ -124,4 +123,4 @@ Card.propTypes = {
   onUpdateContent: PropTypes.func,
 };
 
-export default Card;
+export default memo(Card);

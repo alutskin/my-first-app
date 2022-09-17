@@ -1,14 +1,15 @@
+import ContentEditable from "react-contenteditable";
 import classes from "./CardBody.module.css";
 
 const CardBody = (props) => {
   return (
-    <p
+    <ContentEditable
       className={`${classes.text} ${props.checked ? classes["dark-text"] : ""}`}
-      contentEditable={props.editable}
-      onKeyUp={props.textChangeHandler}
-    >
-      {props.text}
-    </p>
+      disabled={!props.editable}
+      onChange={props.textChangeHandler}
+      html={props.text}
+      tagName="p"
+    />
   );
 };
 
