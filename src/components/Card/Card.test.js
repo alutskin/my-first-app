@@ -1,5 +1,3 @@
-jest.setTimeout(100000);
-
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { screen, act } from "@testing-library/react";
