@@ -16,8 +16,6 @@ describe("Card UI changes tests", () => {
     beforeEach(async () => {
         const res = updateStore();
         store = res.store;
-        // Waiting for disappearing loading spinners
-        await act(() => sleep(3000));
 
         cardHeader = screen.getByText(/This is card header/);
         cardBody = screen.getByText(/This is card body/);

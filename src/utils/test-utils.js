@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-import CardList from "../components/CardList/CardList";
+import Card from "../components/Card/Card";
 import { rootReducer } from '../store/rootSlice';
 import { authReducer } from '../store/authSlice';
 
@@ -24,7 +24,9 @@ const INIT_STORE = {
 };
 const INIT_UI = (
     <BrowserRouter>
-        <CardList />
+        <Card 
+            id="test id"
+        />
     </BrowserRouter>
 );
 
