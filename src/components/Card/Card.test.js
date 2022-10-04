@@ -6,6 +6,30 @@ import { BrowserRouter } from "react-router-dom";
 import { updateStore } from "../../utils/test-utils";
 import { rootActions } from "../../store/rootSlice";
 import App from "../../App";
+import Card from "./Card";
+
+const initCardsData = [
+    {
+        id: "test id",
+        caption: "This is card header",
+        text: "This is card body",
+        checked: false,
+    }
+];
+const INIT_STORE = {
+    root: {
+        cardsData: initCardsData,
+        addingCard: false,
+        readOnly: false,
+    }
+};
+const INIT_UI = (
+    <BrowserRouter>
+        <Card
+            id="test id"
+        />
+    </BrowserRouter>
+);
 
 const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -14,7 +38,7 @@ const sleep = (ms) => {
 describe("Card UI changes tests", () => {
     let store, cardHeader, cardBody;
     beforeEach(async () => {
-        const res = updateStore();
+        const res = updateStore(INIT_UI, INIT_STORE);
         store = res.store;
 
         cardHeader = screen.getByText(/This is card header/);
