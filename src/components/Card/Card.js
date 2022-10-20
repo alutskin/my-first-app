@@ -1,71 +1,88 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import PropTypes from "prop-types";
-
-import classes from "./Card.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AiFillEdit } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { AiFillCloseCircle } from "react-icons/ai";
+
+import classes from "./Card.module.css";
 import CardHeader from "../CardHeader/CardHeader";
 import CardBody from "../CardBody/CardBody";
-import { useNavigate } from "react-router-dom";
+import { rootActions } from "../../store/rootSlice";
 
 function Card(props) {
+  const id = props.id;
+  const {
+    caption,
+    text,
+    checked,
+  } = useSelector((store) => store.root.cardsData.find(cardData => cardData.id === id));
+  const readOnly = useSelector((store) => store.root.readOnly);
   const [editable, setEditable] = useState(false);
-  const [curCaptionValue, setCurCaptionValue] = useState(props.caption);
-  const [curTextValue, setCurTextValue] = useState(props.text);
+  const [curCaptionValue, setCurCaptionValue] = useState(caption);
+  const [curTextValue, setCurTextValue] = useState(text);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const updateCheckedStatus = useCallback((status) => {
+    dispatch(rootActions.updateCheckedStatus({ id, status }));
+  }, [dispatch, id]);
+
+  const updateContent = useCallback((newCaption, newText) => {
+    dispatch(rootActions.updateCardContent({ id, newCaption, newText }));
+  }, [dispatch, id]);
 
   const checkboxHandler = (event) => {
     if (event.target.checked) {
-      props.onUpdateCheckedStatus(true, props.id);
+      updateCheckedStatus(true);
     } else {
-      props.onUpdateCheckedStatus(false, props.id);
+      updateCheckedStatus(false);
     }
   };
 
   const editClickHandler = () => {
     setEditable(true);
-    props.onUpdateCheckedStatus(false, props.id);
+    updateCheckedStatus(false);
   };
 
   const saveChangesHandler = () => {
-    props.onUpdateContent(curCaptionValue, curTextValue, props.id);
+    updateContent(curCaptionValue, curTextValue);
     setEditable(false);
   };
 
   const cancelChangesHandler = () => {
-    props.onUpdateContent(props.caption + " ", props.text + " ", props.id);
-    setCurCaptionValue(props.caption + " ");
-    setCurTextValue(props.text + " ");
+    setCurCaptionValue(caption);
+    setCurTextValue(text);
     setEditable(false);
   };
 
   const captionChangeHandler = (event) => {
-    setCurCaptionValue(event.target.textContent);
+    setCurCaptionValue(event.target.value);
   };
 
   const textChangeHandler = (event) => {
-    setCurTextValue(event.target.textContent);
+    setCurTextValue(event.target.value);
   };
 
   const cardDoubleClickHandler = () => {
     if (!editable) {
-      navigate(`/card/${props.id}`);
+      navigate(`/card/${id}`);
     }
   };
 
-  if (editable && props.readOnly) {
+  if (editable && readOnly) {
     cancelChangesHandler();
   }
 
   return (
     <div
-      className={`${classes.card} ${props.checked ? classes["dark-card"] : ""}`}
+      className={`${classes.card} ${checked ? classes["dark-card"] : ""}`}
       onDoubleClick={cardDoubleClickHandler}
     >
       <CardHeader
-        caption={props.caption}
-        checked={props.checked}
+        caption={curCaptionValue}
+        checked={checked}
         editable={editable}
         captionChangeHandler={captionChangeHandler}
       />
@@ -73,15 +90,15 @@ function Card(props) {
       <input
         type="checkbox"
         className={classes["select-checkbox"]}
-        checked={props.checked}
+        checked={checked}
         style={editable ? { display: "none" } : { display: "inline" }}
         onChange={checkboxHandler}
       />
 
       <AiFillEdit
         className={classes["edit-icon"]}
-        color={props.checked ? "#C0C0C0" : "#3f3f3f"}
-        visibility={editable || props.readOnly ? "hidden" : "visible"}
+        color={checked ? "#C0C0C0" : "#3f3f3f"}
+        visibility={editable || readOnly ? "hidden" : "visible"}
         onClick={editClickHandler}
       />
 
@@ -100,13 +117,13 @@ function Card(props) {
       />
 
       <hr
-        color={props.checked ? "#C0C0C0" : "#3f3f3f"}
+        color={checked ? "#C0C0C0" : "#3f3f3f"}
         className={classes.line}
       />
 
       <CardBody
-        text={props.text}
-        checked={props.checked}
+        text={curTextValue}
+        checked={checked}
         editable={editable}
         textChangeHandler={textChangeHandler}
       />
@@ -116,12 +133,6 @@ function Card(props) {
 
 Card.propTypes = {
   id: PropTypes.string,
-  caption: PropTypes.string,
-  text: PropTypes.string,
-  checked: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  onUpdateCheckedStatus: PropTypes.func,
-  onUpdateContent: PropTypes.func,
 };
 
-export default Card;
+export default memo(Card);

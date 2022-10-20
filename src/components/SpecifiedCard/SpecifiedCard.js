@@ -7,6 +7,7 @@ import {
   AiFillCloseCircle,
   AiOutlineDoubleLeft,
 } from "react-icons/ai";
+import ContentEditable from "react-contenteditable";
 
 import classes from "./SpecifiedCard.module.css";
 import Panel from "../../UI/Panel/Panel";
@@ -38,11 +39,6 @@ const SpecifiedCard = ({ cardData }) => {
     setEditable(false);
     setCaption(cardData.caption);
     setText(cardData.text);
-    dispatch(rootActions.updateCardContent({
-      id: cardData.id,
-      newCaption: cardData.caption + " ",
-      newText: cardData.text + " ",
-    }));
   };
 
   const backHandler = () => {
@@ -50,31 +46,33 @@ const SpecifiedCard = ({ cardData }) => {
   };
 
   const captionChangeHandler = (event) => {
-    setCaption(event.target.textContent);
+    setCaption(event.target.value);
   };
 
   const textChangeHandler = (event) => {
-    setText(event.target.textContent);
+    setText(event.target.value);
   };
 
   return (
     <div className={classes.wrapper}>
-      <h1
+      <ContentEditable
         className={classes.caption}
-        contentEditable={editable}
-        onKeyUp={captionChangeHandler}
-      >
-        {cardData.caption}
-      </h1>
+        disabled={!editable}
+        onChange={captionChangeHandler}
+        html={caption}
+        tagName="h1"
+      />
+
       <hr className={classes.line} />
 
-      <p
+      <ContentEditable
         className={classes.text}
-        contentEditable={editable}
-        onKeyUp={textChangeHandler}
-      >
-        {cardData.text}
-      </p>
+        disabled={!editable}
+        onChange={textChangeHandler}
+        html={text}
+        tagName="p"
+      />
+
       <hr className={classes.line} />
 
       <Panel>
