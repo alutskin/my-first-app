@@ -10,13 +10,11 @@ import Button from "../UI/Button/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AiFillDelete } from "react-icons/ai";
 import { rootActions } from "../store/rootSlice";
-import usePrompt from "../hooks/usePrompt";
 
 const Home = () => {
   const addingCard = useSelector((store) => store.root.addingCard);
   const readOnly = useSelector(store => store.root.readOnly);
   const dispatch = useDispatch();
-  usePrompt("Hey! What's up?", 2000);
 
   const startAddNewCardHandler = () => {
     dispatch(rootActions.startAddNewCard());
